@@ -3,3 +3,4 @@ docs/
 Thumbs.db
 *.log
 .cache
+.vscode
