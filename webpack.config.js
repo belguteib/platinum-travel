@@ -11,12 +11,12 @@ const postCSSPlugins = [
   require("postcss-simple-vars"),
   require("postcss-nested"),
   require("postcss-hexrgba"),
-  require("autoprefixer")
+  require("autoprefixer"),
 ];
 
 class RunAfterCompile {
   apply(compiler) {
-    compiler.hooks.done.tap("Copy images", function() {
+    compiler.hooks.done.tap("Copy images", function () {
       fse.copySync("./app/assets/images", "./docs/assets/images");
     });
   }
@@ -26,19 +26,19 @@ let cssConfig = {
   test: /\.css$/i,
   use: [
     "css-loader",
-    { loader: "postcss-loader", options: { plugins: postCSSPlugins } }
-  ]
+    { loader: "postcss-loader", options: { plugins: postCSSPlugins } },
+  ],
 };
 
 let pages = fse
   .readdirSync("./app")
-  .filter(function(file) {
+  .filter(function (file) {
     return file.endsWith(".html");
   })
-  .map(function(page) {
+  .map(function (page) {
     return new HtmlWebpackPlugin({
       filename: page,
-      template: `./app/${page}`
+      template: `./app/${page}`,
     });
   });
 
@@ -46,27 +46,30 @@ let config = {
   entry: "./app/assets/scripts/App.js",
   plugins: pages,
   module: {
-    rules: [cssConfig]
-  }
+    rules: [cssConfig],
+  },
 };
 
 if (currentTask == "dev") {
   cssConfig.use.unshift("style-loader");
   config.output = {
     filename: "bundled.js",
-    path: path.resolve(__dirname, "app")
+    path: path.resolve(__dirname, "app"),
   };
 
   (config.devServer = {
-    before: function(app, server) {
+    before: function (app, server) {
       server._watch("./app/**/*.html");
     },
     contentBase: path.join(__dirname, "app"),
     hot: true,
     port: 3000,
-    host: "0.0.0.0"
+    host: "0.0.0.0",
   }),
-    (config.mode = "development");
+    (config.mode = "development"),
+    console.log(
+      `Webpack dev server ${config.devServer.port} порт дээр аслаа... `
+    );
 }
 
 if (currentTask == "build") {
@@ -76,20 +79,20 @@ if (currentTask == "build") {
     use: {
       loader: "babel-loader",
       options: {
-        presets: ["@babel/preset-env"]
-      }
-    }
+        presets: ["@babel/preset-env"],
+      },
+    },
   });
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   postCSSPlugins.push(require("cssnano"));
   config.output = {
     filename: "[name].[chunkhash].js",
     chunkFilename: "[name].[chunkhash].js",
-    path: path.resolve(__dirname, "docs")
+    path: path.resolve(__dirname, "docs"),
   };
   config.mode = "production";
   config.optimization = {
-    splitChunks: { chunks: "all" }
+    splitChunks: { chunks: "all" },
   };
   config.plugins.push(
     new CleanWebpackPlugin(),
