@@ -1,5 +1,5 @@
 {
-  "name": "platinum-travel-site",
+  "name": "platinum-travel",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/onlinevideotraining1234/platinum-travel-site.git"
+    "url": "https://github.com/belguteib/platinum-travel.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/onlinevideotraining1234/platinum-travel-site/issues"
+    "url": "https://github.com/belguteib/platinum-travel/issues"
   },
-  "homepage": "https://github.com/onlinevideotraining1234/platinum-travel-site#readme",
+  "homepage": "https://github.com/belguteib/platinum-travel#readme",
   "dependencies": {
     "axios": "^0.19.2",
     "lazysizes": "^5.2.0",
